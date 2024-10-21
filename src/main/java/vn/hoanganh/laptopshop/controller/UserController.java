@@ -99,7 +99,7 @@ public class UserController {
     }
 
     // xoa
-    @PostMapping("/admin/user/delete")
+    @PostMapping("/admin/user/deleten")
     public String postDeleteUserPage(Model model, @ModelAttribute("newUser") User hoanganh) {
         this.userService.deleteUser(hoanganh.getId());
         return "redirect:/admin/user";

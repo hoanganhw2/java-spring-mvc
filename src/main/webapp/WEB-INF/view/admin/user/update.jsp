@@ -11,24 +11,25 @@
                 <link rel="stylesheet" href="/css/bootstrap/bt_css/bootstrap.min.css">
                 <link rel="stylesheet" href="/css/bootstrap/bt_js/bootstrap.bundle.min.js">
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-                <title>Thêm mới người dùng </title>
+                <title>Cập nhật người dùng </title>
             </head>
 
             <body>
                 <div class="container mt-5">
                     <div class="row">
                         <div class="col-md-6 col-12 mx-auto">
-                            <h3>Thêm mới người dùng</h3>
+                            <h3>Cập nhật thông tin người dùng</h3>
                             </hr>
-                            <form:form method="post" action="/admin/user/create" modelAttribute="newUser">
+                            <form:form method="post" action="/admin/user/update" modelAttribute="newUser">
+                                <div class="mb-3 " style="display: none;">
+                                    <label class="form-label">Id:</label>
+                                    <form:input class="form-control" path="id" type="text" />
+                                </div>
                                 <div class="mb-3">
                                     <label class="form-label">Email:</label>
-                                    <form:input type="email" class="form-control" path="email" />
+                                    <form:input type="email" class="form-control" path="email" disabled="true" />
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Mật khẩu:</label>
-                                    <form:input type="password" class="form-control" path="password" />
-                                </div>
+
                                 <div class="mb-3">
                                     <label class="form-label">Số điện thoại:</label>
                                     <form:input class="form-control" type="tel" path="phone" />
@@ -41,8 +42,9 @@
                                     <label class="form-label">Địa chỉ:</label>
                                     <form:input type="text" class="form-control" path="address" />
                                 </div>
-                                <div class="mb-3">
-                                    <input type="submit" value="Thêm" class="btn btn-primary" />
+                                <div class="mb-3 d-flex justify-content-between">
+                                    <input type="submit" value="Cập nhật" class="btn btn-primary me-2" />
+                                    <a class="btn btn-success " href="/admin/user">Quay lại</a>
                                 </div>
                             </form:form>
 
