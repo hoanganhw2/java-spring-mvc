@@ -1,11 +1,18 @@
 package vn.hoanganh.laptopshop.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +22,14 @@ public class User {
     private String fullName;
     private String address;
     private String phone;
+    private String avatar;
+    // Nhiều user thì thuộc 1 Role
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
 
     public User() {
     }
@@ -75,6 +90,14 @@ public class User {
         this.phone = phone;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -85,7 +108,9 @@ public class User {
         sb.append(", fullName=").append(fullName);
         sb.append(", address=").append(address);
         sb.append(", phone=").append(phone);
+        sb.append(", avatar=").append(avatar);
         sb.append('}');
         return sb.toString();
     }
+
 }
