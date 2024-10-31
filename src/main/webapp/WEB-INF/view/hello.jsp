@@ -20,5 +20,5 @@
                 <input class="btn btn-primary" type="submit" value="Thêm user">
             </form>
         </body>
-
+      
         </html>

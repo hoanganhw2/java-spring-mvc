@@ -1,4 +1,4 @@
-package vn.hoanganh.laptopshop.controller;
+package vn.hoanganh.laptopshop.controller.admin;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class UserController {
     public String getAllUserPage(Model model) {
         List<User> Users = this.userService.getAllUsers();
         model.addAttribute("users", Users);
-        return "admin/user/tableuser";
+        return "admin/user/show";
     }
 
     @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
@@ -63,7 +63,7 @@ public class UserController {
         model.addAttribute("id", id);
         model.addAttribute("user", user);
 
-        return "/admin/user/show";
+        return "/admin/user/detail";
     }
 
     // cập nhật thông tin người dùng

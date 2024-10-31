@@ -6,53 +6,77 @@
             <html lang="en">
 
             <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <meta charset="utf-8" />
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+                <meta name="description" content="" />
+                <meta name="author" content="" />
+                <title>Cập nhật thông tin người dùng</title>
                 <link rel="stylesheet" href="/css/bootstrap/bt_css/bootstrap.min.css">
                 <link rel="stylesheet" href="/css/bootstrap/bt_js/bootstrap.bundle.min.js">
-
-                <title>Cập nhật người dùng </title>
+                <link href="/css/style.css" rel="stylesheet" />
+                <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
             </head>
 
-            <body>
-                <div class="container mt-5">
-                    <div class="row">
-                        <div class="col-md-6 col-12 mx-auto">
-                            <h3>Cập nhật thông tin người dùng</h3>
-                            </hr>
-                            <form:form method="post" action="/admin/user/update" modelAttribute="newUser">
-                                <div class="mb-3 " style="display: none;">
-                                    <label class="form-label">Id:</label>
-                                    <form:input class="form-control" path="id" type="text" />
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Email:</label>
-                                    <form:input type="email" class="form-control" path="email" disabled="true" />
-                                </div>
+            <body class="sb-nav-fixed">
+                <jsp:include page="../layout/header.jsp" />
+                <div id="layoutSidenav">
+                    <jsp:include page="../layout/sidebar.jsp" />
+                    <div id="layoutSidenav_content">
+                        <main>
+                            <div class="container-fluid px-4">
+                                <h1 class="mt-4">Dashboard</h1>
+                                <ol class="breadcrumb mb-4">
+                                    <li class="breadcrumb-item"><a href="/admin/user">Dashboard</a></li>
+                                    <li class="breadcrumb-item active">User </li>
+                                    <li class="breadcrumb-item active">Update </li>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Số điện thoại:</label>
-                                    <form:input class="form-control" type="tel" path="phone" />
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Họ tên :</label>
-                                    <form:input type="text" class="form-control" path="fullName" />
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Địa chỉ:</label>
-                                    <form:input type="text" class="form-control" path="address" />
-                                </div>
-                                <div class="mb-3 d-flex justify-content-between">
-                                    <input type="submit" value="Cập nhật" class="btn btn-primary me-2" />
-                                    <a class="btn btn-success " href="/admin/user">Quay lại</a>
-                                </div>
-                            </form:form>
+                                </ol>
+                            </div>
+                            <div class="container mt-5">
+                                <div class="row">
+                                    <div class="col-md-6 col-12 mx-auto">
+                                        <h3>Cập nhật thông tin người dùng</h3>
+                                        </hr>
+                                        <form:form method="post" action="/admin/user/update" modelAttribute="newUser">
+                                            <div class="mb-3 " style="display: none;">
+                                                <label class="form-label">Id:</label>
+                                                <form:input class="form-control" path="id" type="text" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Email:</label>
+                                                <form:input type="email" class="form-control" path="email"
+                                                    disabled="true" />
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Số điện thoại:</label>
+                                                <form:input class="form-control" type="tel" path="phone" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Họ tên :</label>
+                                                <form:input type="text" class="form-control" path="fullName" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Địa chỉ:</label>
+                                                <form:input type="text" class="form-control" path="address" />
+                                            </div>
+                                            <div class="mb-3 d-flex justify-content-between">
+                                                <input type="submit" value="Cập nhật" class="btn btn-primary me-2" />
+                                                <a class="btn btn-success " href="/admin/user">Quay lại</a>
+                                            </div>
+                                        </form:form>
 
 
-                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
+                        <jsp:include page="../layout/footer.jsp" />
                     </div>
                 </div>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-            </body>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+                    crossorigin="anonymous"></script>
+                <script src="/js/scripts.js"></script>
 
             </html>
