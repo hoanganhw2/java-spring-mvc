@@ -2,6 +2,7 @@ package vn.hoanganh.laptopshop.controller.admin;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,33 +10,28 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import vn.hoanganh.laptopshop.domain.User;
+import vn.hoanganh.laptopshop.service.UploadService;
 import vn.hoanganh.laptopshop.service.UserService;
 
 @Controller
 public class UserController {
-
+    private PasswordEncoder passwordEncoder;
     private final UserService userService;
+    private UploadService uploadService;
 
-    public UserController(UserService userService) {
-
+    public UserController(UserService userService, UploadService uploadService,
+            PasswordEncoder passwordEncoder) {
+        this.uploadService = uploadService;
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    @RequestMapping("/")
-    public String getHomePage(Model model) {
-        List<User> list = this.userService.getAllUserByEmail("hoanganh@gmail.com");
-        for (User us : list) {
-            System.out.println(us.toString());
-        }
-        return "hello";
-    }
-
-    @RequestMapping(value = "/admin/user/create", method = RequestMethod.GET)
+    @GetMapping(value = "/admin/user/create")
     public String getUserPage(Model model) {
-
         model.addAttribute("newUser", new User());
         return "admin/user/create";
     }
@@ -48,10 +44,15 @@ public class UserController {
         return "admin/user/show";
     }
 
-    @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
-    public String createUser(Model model, @ModelAttribute("newUser") User hanhUser) {
+    @PostMapping("/admin/user/create") // ---------------------------------------------------------------------- POST
+    public String createUser(Model model, @ModelAttribute("newUser") User hanhUser,
+            @RequestParam("userFile") MultipartFile file) {
+        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+        String hashPassword = this.passwordEncoder.encode(hanhUser.getPassword());
+        hanhUser.setAvatar(avatar);
+        hanhUser.setRole(this.userService.getRoleByName(hanhUser.getRole().getName()));
+        hanhUser.setPassword(hashPassword);
         this.userService.handleSaveUser(hanhUser);
-        System.out.println("Run here" + hanhUser.toString());
         return "redirect:/admin/user";
     }
 

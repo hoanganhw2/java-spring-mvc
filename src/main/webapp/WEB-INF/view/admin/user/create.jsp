@@ -1,7 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-
             <!DOCTYPE html>
             <html lang="en">
 
@@ -38,7 +37,7 @@
                             <div class="container-fluid px-4">
                                 <h1 class="mt-4">Dashboard</h1>
                                 <ol class="breadcrumb mb-4">
-                                    <li class="breadcrumb-item"><a>Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
                                     <li class="breadcrumb-item active">User</li>
                                 </ol>
                             </div>
@@ -48,7 +47,7 @@
                                         <h3>Thêm mới người dùng</h3>
                                         </hr>
                                         <form:form method="post" action="/admin/user/create" modelAttribute="newUser"
-                                            class="row">
+                                            class="row" enctype="multipart/form-data">
                                             <div class="mb-3 col-12 col-md-6">
                                                 <label class="form-label">Email:</label>
                                                 <form:input type="email" class="form-control" path="email" />
@@ -71,15 +70,16 @@
                                             </div>
                                             <div class="mb-3 col-12 col-md-6">
                                                 <label class="form-label">Role:</label>
-                                                <select class="form-select">
-                                                    <option value="ADMIN">ADMIN</option>
-                                                    <option value="USER">USER</option>
-                                                </select>
+                                                <form:select class="form-select" path="role.name">
+                                                    <form:option value="ADMIN">ADMIN</form:option>
+                                                    <form:option value="USER">USER</form:option>
+                                                </form:select>
                                             </div>
                                             <div class="mb-3 col-12 col-md-6">
                                                 <label class="form-label " for="avatarFile">Avatar:</label>
                                                 <input class="form-control" type="file" id="avatarFile"
-                                                    accept=".png, .jpg, .jpeg" />
+                                                    accept=".png, .jpg, .jpeg" name="userFile" />
+
                                             </div>
                                             <div class="col-12 mb-3">
                                                 <img style="max-height: 250px; display: none;" alt="avatar preview"

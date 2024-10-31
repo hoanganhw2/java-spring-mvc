@@ -42,6 +42,7 @@
                                                 <th scope="col">ID</th>
                                                 <th scope="col">Email</th>
                                                 <th scope="col">Họ tên</th>
+                                                <th scope="col">ROLE</th>
                                                 <th scope="col"></th>
                                             </tr>
                                         </thead>
@@ -51,6 +52,19 @@
                                                     <td>${user.id}</td>
                                                     <td>${user.email}</td>
                                                     <td>${user.fullName}</td>
+                                                    <c:choose>
+                                                        <c:when test="${user.role.name == 'ADMIN'}">
+                                                            <td class="text-danger fw-b f-2">${user.role.name}
+                                                            </td>
+                                                        </c:when>
+                                                        <c:when test="${user.role.name == 'USER'}">
+                                                            <td class="text-success fw-b f-2">${user.role.name}
+                                                            </td>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <td>${user.role.name}</td>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                     <td>
                                                         <a class="btn btn-success "
                                                             href="/admin/user/${user.id}">Xem</a>

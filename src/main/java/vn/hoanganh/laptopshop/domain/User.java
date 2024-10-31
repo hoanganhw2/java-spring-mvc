@@ -34,14 +34,6 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, String fullName, String address, String phone) {
-        this.email = email;
-        this.password = password;
-        this.fullName = fullName;
-        this.address = address;
-        this.phone = phone;
-    }
-
     public long getId() {
         return id;
     }
@@ -98,6 +90,14 @@ public class User {
         this.avatar = avatar;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -111,6 +111,14 @@ public class User {
         sb.append(", avatar=").append(avatar);
         sb.append('}');
         return sb.toString();
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
 }
