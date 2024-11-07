@@ -22,10 +22,10 @@
                 <div id="layoutSidenav_content">
                     <main>
                         <div class="container-fluid px-4">
-                            <h1 class="mt-4">Dashboard</h1>
+                            <h1 class="mt-4">Quản lý người dùng</h1>
                             <ol class="breadcrumb mb-4">
-                                <li class="breadcrumb-item"><a href="/admin/user">Dashboard</a></li>
-                                <li class="breadcrumb-item active">User</li>
+                                <li class="breadcrumb-item"><a href="/admin">Trang chính</a></li>
+                                <li class="breadcrumb-item active">Người dùng</li>
                             </ol>
                         </div>
                         <div class=" m-5">
@@ -36,47 +36,49 @@
                                         <a class="btn btn-primary" href="/admin/user/create">Thêm mới </a>
                                     </div>
                                     <hr>
-                                    <table class="table table-bordered table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">ID</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Họ tên</th>
-                                                <th scope="col">ROLE</th>
-                                                <th scope="col"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="user" items="${users}">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover ">
+                                            <thead>
                                                 <tr>
-                                                    <td>${user.id}</td>
-                                                    <td>${user.email}</td>
-                                                    <td>${user.fullName}</td>
-                                                    <c:choose>
-                                                        <c:when test="${user.role.name == 'ADMIN'}">
-                                                            <td class="text-danger fw-b f-2">${user.role.name}
-                                                            </td>
-                                                        </c:when>
-                                                        <c:when test="${user.role.name == 'USER'}">
-                                                            <td class="text-success fw-b f-2">${user.role.name}
-                                                            </td>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <td>${user.role.name}</td>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                    <td>
-                                                        <a class="btn btn-success "
-                                                            href="/admin/user/${user.id}">Xem</a>
-                                                        <a class="btn btn-warning mx-2"
-                                                            href="/admin/user/update/${user.id}">Sửa</a>
-                                                        <a class="btn btn-danger "
-                                                            href="/admin/user/delete/${user.id}">Xóa</a>
-                                                    </td>
+                                                    <th scope="col">ID</th>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Họ tên</th>
+                                                    <th scope="col">ROLE</th>
+                                                    <th scope="col"></th>
                                                 </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach var="user" items="${users}">
+                                                    <tr>
+                                                        <td>${user.id}</td>
+                                                        <td>${user.email}</td>
+                                                        <td>${user.fullName}</td>
+                                                        <c:choose>
+                                                            <c:when test="${user.role.name == 'ADMIN'}">
+                                                                <td class="text-danger fw-b f-2">${user.role.name}
+                                                                </td>
+                                                            </c:when>
+                                                            <c:when test="${user.role.name == 'USER'}">
+                                                                <td class="text-success fw-b f-2">${user.role.name}
+                                                                </td>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <td>${user.role.name}</td>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                        <td>
+                                                            <a class="btn btn-success "
+                                                                href="/admin/user/${user.id}">Xem</a>
+                                                            <a class="btn btn-warning mx-2"
+                                                                href="/admin/user/update/${user.id}">Sửa</a>
+                                                            <a class="btn btn-danger "
+                                                                href="/admin/user/delete/${user.id}">Xóa</a>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

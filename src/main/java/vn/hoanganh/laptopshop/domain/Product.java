@@ -1,10 +1,15 @@
 package vn.hoanganh.laptopshop.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "products")
@@ -12,30 +17,26 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    @NotNull
+    @NotEmpty(message = "Tên không được trống")
     private String name;
     private String image;
+    @NotNull
+    @NotEmpty(message = "detailDesc không được trống")
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String detailDesc;
+    @NotNull
+    @NotEmpty(message = "shortDesc không được trống")
     private String shortDesc;
+    @NotNull
+    @DecimalMin(value = "0", inclusive = false, message = "Giá sản phẩm phải lớn hơn 0")
+    private double price;
+    @NotNull
+    @Min(value = 1, message = "Số lượng phải lớn hơn hoặc bằng 1")
     private long quantity;
     private long sold;
     private String factory;
     private String target;
-
-    public Product() {
-    }
-
-    public Product(String name, String image, String detailDesc, String shortDesc, long quantity, long sold,
-            String factory, String target) {
-        this.detailDesc = detailDesc;
-        this.factory = factory;
-        this.image = image;
-        this.name = name;
-        this.quantity = quantity;
-        this.shortDesc = shortDesc;
-        this.sold = sold;
-        this.target = target;
-    }
 
     public long getId() {
         return id;
@@ -124,6 +125,14 @@ public class Product {
         sb.append(", target=").append(target);
         sb.append('}');
         return sb.toString();
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
 }

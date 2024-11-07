@@ -22,11 +22,11 @@
                 <div id="layoutSidenav_content">
                     <main>
                         <div class="container-fluid px-4">
-                            <h1 class="mt-4">Dashboard</h1>
+                            <h1 class="mt-4">Quản lý người dùng</h1>
                             <ol class="breadcrumb mb-4">
-                                <li class="breadcrumb-item"><a href="/admin/user">Dashboard</a></li>
-                                <li class="breadcrumb-item active">User</li>
-                                <li class="breadcrumb-item active">View</li>
+                                <li class="breadcrumb-item"><a href="/admin">Trang chính</a></li>
+                                <li class="breadcrumb-item active">Người dùng</li>
+                                <li class="breadcrumb-item active">Thông tin</li>
                             </ol>
                         </div>
                         <div class="container mt-5">

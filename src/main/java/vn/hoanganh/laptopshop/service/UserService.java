@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import vn.hoanganh.laptopshop.domain.Role;
 import vn.hoanganh.laptopshop.domain.User;
+import vn.hoanganh.laptopshop.dto.ResigterDTO;
 import vn.hoanganh.laptopshop.repository.RoleRepository;
 import vn.hoanganh.laptopshop.repository.UserRepository;
 
@@ -21,10 +22,6 @@ public class UserService {
 
     public List<User> getAllUsers() {
         return this.userRepository.findAll();
-    }
-
-    public List<User> getAllUserByEmail(String email) {
-        return this.userRepository.findByEmail(email);
     }
 
     public User handleSaveUser(User user) {
@@ -44,4 +41,15 @@ public class UserService {
 
     }
 
+    public User registerDTOtoUser(ResigterDTO resigterDTO) {
+        User user = new User();
+        user.setFullName(resigterDTO.getFirstName() + " " + resigterDTO.getLastName());
+        user.setEmail(resigterDTO.getEmail());
+        user.setPassword(resigterDTO.getPassword());
+        return user;
+    }
+
+    public User getUserByEmail(String email) {
+        return this.userRepository.findByEmail(email);
+    }
 }

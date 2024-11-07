@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.validation.Valid;
 import vn.hoanganh.laptopshop.domain.User;
 import vn.hoanganh.laptopshop.service.UploadService;
 import vn.hoanganh.laptopshop.service.UserService;
@@ -37,7 +40,7 @@ public class UserController {
     }
 
     // lấy ra danh sách người dùng
-    @RequestMapping("/admin/user")
+    @GetMapping("/admin/user")
     public String getAllUserPage(Model model) {
         List<User> Users = this.userService.getAllUsers();
         model.addAttribute("users", Users);
@@ -45,15 +48,31 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/create") // ---------------------------------------------------------------------- POST
-    public String createUser(Model model, @ModelAttribute("newUser") User hanhUser,
+    public String createUser(Model model, @ModelAttribute("newUser") @Valid User hanhUser,
+            BindingResult newUserBindingResult,
             @RequestParam("userFile") MultipartFile file) {
+
+        List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(">>>>" + error.getField() + " - " + error.getDefaultMessage());
+        }
+
+        // validate
+        if (newUserBindingResult.hasErrors()) {
+            return "admin/user/create";
+        }
+
+        //
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
         String hashPassword = this.passwordEncoder.encode(hanhUser.getPassword());
+
         hanhUser.setAvatar(avatar);
-        hanhUser.setRole(this.userService.getRoleByName(hanhUser.getRole().getName()));
         hanhUser.setPassword(hashPassword);
+        hanhUser.setRole(this.userService.getRoleByName(hanhUser.getRole().getName()));
+        // save
         this.userService.handleSaveUser(hanhUser);
         return "redirect:/admin/user";
+
     }
 
     // xem chi tiết 1 user
@@ -67,7 +86,7 @@ public class UserController {
         return "/admin/user/detail";
     }
 
-    // cập nhật thông tin người dùng
+    // truy cập trang cập nhật thông tin người dùng
     @RequestMapping("/admin/user/update/{id}")
     public String getUpdateUserPage(Model model, @PathVariable long id) {
         User currenUser = this.userService.getUserById(id);
@@ -76,6 +95,7 @@ public class UserController {
         return "/admin/user/update";
     }
 
+    // cập nhật thông tin người dùng
     @PostMapping("/admin/user/update")
     public String postUpdateUser(Model model, @ModelAttribute("newUser") User user1) {
         User currentUser = this.userService.getUserById(user1.getId());
