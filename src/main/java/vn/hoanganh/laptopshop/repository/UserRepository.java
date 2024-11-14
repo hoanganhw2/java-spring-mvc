@@ -8,7 +8,6 @@ import vn.hoanganh.laptopshop.domain.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     // thêm mới người dùng
-    public User save(User user);
 
     public User findByEmail(String email);
 

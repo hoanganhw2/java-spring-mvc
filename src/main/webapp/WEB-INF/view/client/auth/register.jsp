@@ -71,6 +71,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <input type="hidden" name="${_csrf.parameterName}"
+                                                        value="${_csrf.token}" />
                                                     <div class="mt-4 mb-0">
                                                         <div class="d-grid"><input type="submit"
                                                                 class="btn btn-primary btn-block"

@@ -2,6 +2,9 @@ package vn.hoanganh.laptopshop.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import vn.hoanganh.laptopshop.domain.Product;
@@ -13,10 +16,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // lấy ra tất cả danh sách sản phẩm
     public List<Product> findAll();
 
-    // tim san pham theo id
-    public Product findById(long id);
-
+    
     // xoa san pham theo id
     public void deleteById(Long id);
 
+    public Page<Product> findAll(Pageable page);
+
+    Page<Product> findAll(Specification<Product> spec, Pageable page);
 }

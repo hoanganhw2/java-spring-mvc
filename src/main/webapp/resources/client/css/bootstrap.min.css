@@ -372,7 +372,9 @@ select {
 }
 
 select:disabled {
-    opacity: 1
+    opacity: 1 !important;
+
+
 }
 
 [list]::-webkit-calendar-picker-indicator {

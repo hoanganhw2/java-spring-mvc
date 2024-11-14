@@ -27,16 +27,30 @@
                                                 <h3 class="text-center font-weight-light my-4">Đăng nhập</h3>
                                             </div>
                                             <div class="card-body">
-                                                <form>
+                                                <form action="/login" method="post">
+                                                    <c:if test="${param.error != null}">
+                                                        <div class="my-2" style="color: red;">Email hoặc mật khẩu không
+                                                            đúng
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="${param.logout != null}">
+                                                        <div class="my-2" style="color: green;">Bạn đã đăng xuất thành
+                                                            công
+                                                        </div>
+                                                    </c:if>
                                                     <div class="form-floating mb-3">
                                                         <input class="form-control" id="inputEmail" type="email"
-                                                            placeholder="name@example.com" />
+                                                            placeholder="name@example.com" name="username" />
                                                         <label for="inputEmail">Email </label>
                                                     </div>
                                                     <div class="form-floating mb-3">
                                                         <input class="form-control" id="inputPassword" type="password"
-                                                            placeholder="Password" />
+                                                            placeholder="Password" name="password" />
                                                         <label for="inputPassword">Mật khẩu</label>
+                                                    </div>
+                                                    <div>
+                                                        <input type="hidden" name="${_csrf.parameterName}"
+                                                            value="${_csrf.token}" />
                                                     </div>
                                                     <input type="submit" class="btn btn-primary d-block w-100"
                                                         href="index.html " value="Đăng nhập" />

@@ -6,6 +6,8 @@
     z-index: 99999;
 }
 
+
+
 #spinner.show {
     transition: opacity .8s ease-out, visibility 0s linear .0s;
     visibility: visible;
@@ -125,7 +127,7 @@
 }
 
 .navbar {
-    height: 70px;
+    height: 80px;
     border-bottom: 1px solid rgba(255, 255, 255, .1);
 }
 
@@ -510,3 +512,9 @@
 }
 
 /*** Footer End ***/
+.page-link.disabled {
+    pointer-events: none !important;
+    /* Ngăn chặn mọi sự kiện chuột */
+    opacity: 1 !important;
+    /* Giảm độ mờ để biểu thị rằng nó bị vô hiệu hóa */
+}

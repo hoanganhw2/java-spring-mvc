@@ -8,44 +8,34 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-/**
- * OrderDetail
- */
 @Entity
-@Table(name = "order_detail")
-public class OrderDetail {
+@Table(name = "cart_detail")
+public class CartDetail {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private long quantity;
+
     private double price;
 
+    // cart_id: long
     @ManyToOne
-    @JoinColumn(name = "oder_id")
-    private Order order;
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
+    // product_id: long
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public OrderDetail() {
+    public long getId() {
+        return id;
     }
 
-    public OrderDetail(long quantity, double price) {
-        this.price = price;
-        this.quantity = quantity;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("OrderDetail{");
-        sb.append("id=").append(id);
-        sb.append(", quantity=").append(quantity);
-        sb.append(", price=").append(price);
-        sb.append('}');
-        return sb.toString();
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getQuantity() {
@@ -64,12 +54,12 @@ public class OrderDetail {
         this.price = price;
     }
 
-    public Order getOrder() {
-        return order;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public Product getProduct() {
@@ -78,10 +68,6 @@ public class OrderDetail {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public long getId() {
-        return id;
     }
 
 }

@@ -2,6 +2,9 @@ package vn.hoanganh.laptopshop.controller.admin;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,9 +32,13 @@ public class ProductController {
     }
 
     @GetMapping("/admin/product")
-    public String getDashBoard(Model model) {
-        List<Product> products = this.productService.getAllProduct();
+    public String getDashBoard(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
+        Pageable pageable = PageRequest.of(page - 1, 4);
+        Page<Product> productpage = this.productService.getAllProduct(pageable);
+        List<Product> products = productpage.getContent();
         model.addAttribute("products", products);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPage", productpage.getTotalPages() - 1);
         return "admin/product/show";
     }
 
@@ -39,7 +46,7 @@ public class ProductController {
     public String getPageCreateProduct(Model model) {
 
         model.addAttribute("newProduct", new Product());
-        return "/admin/product/create";
+        return "admin/product/create";
     }
 
     @PostMapping("/admin/product/create")
@@ -51,7 +58,7 @@ public class ProductController {
         }
         // validate
         if (newProductBindingResult.hasErrors()) {
-            return "/admin/product/create";
+            return "admin/product/create";
         }
         // set img
         String imgProduct = this.uploadService.handleSaveUploadFile(file, "product");
@@ -62,9 +69,9 @@ public class ProductController {
 
     @GetMapping("/admin/product/update/{id}")
     public String getUpdateProductPage(Model model, @PathVariable long id) {
-        Product product = this.productService.getProdcutById(id);
+        Product product = this.productService.getProdcutById(id).get();
         model.addAttribute("newProduct", product);
-        return "/admin/product/update";
+        return "admin/product/update";
     }
 
     @PostMapping("/admin/product/update")
@@ -73,9 +80,9 @@ public class ProductController {
             @RequestParam("productFile") MultipartFile file) {
         // validate
         if (newProductBindingResult.hasErrors()) {
-            return "/admin/product/update";
+            return "admin/product/update";
         }
-        Product product = this.productService.getProdcutById(pr.getId());
+        Product product = this.productService.getProdcutById(pr.getId()).get();
         if (product != null) {
             // cập nhật image
             if (!file.isEmpty()) {
@@ -99,10 +106,10 @@ public class ProductController {
 
     @GetMapping("/admin/product/{id}")
     public String getProdcutDetailPage(Model model, @PathVariable long id) {
-        Product product = this.productService.getProdcutById(id);
+        Product product = this.productService.getProdcutById(id).get();
         model.addAttribute("id", id);
         model.addAttribute("product", product);
-        return "/admin/product/detail";
+        return "admin/product/detail";
     }
 
     @GetMapping("/admin/product/delete/{id}")
@@ -110,7 +117,6 @@ public class ProductController {
         model.addAttribute("id", id);
         Product product = new Product();
         model.addAttribute("newProduct", product);
-
         return "admin/product/delete";
     }
 

@@ -2,6 +2,9 @@ package vn.hoanganh.laptopshop.controller.admin;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,9 +43,13 @@ public class UserController {
 
     // lấy ra danh sách người dùng
     @GetMapping("/admin/user")
-    public String getAllUserPage(Model model) {
-        List<User> Users = this.userService.getAllUsers();
-        model.addAttribute("users", Users);
+    public String getAllUserPage(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
+        Pageable pageable = PageRequest.of(page - 1, 5);
+        Page<User> userpage = this.userService.getAllUsers(pageable);
+        List<User> users = userpage.getContent();
+        model.addAttribute("users", users);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPage", userpage.getTotalPages() - 1);
         return "admin/user/show";
     }
 
@@ -76,23 +82,23 @@ public class UserController {
     }
 
     // xem chi tiết 1 user
-    @RequestMapping("/admin/user/{id}")
+    @GetMapping("/admin/user/{id}")
     public String getUserDetailPage(Model model, @PathVariable long id) {
 
         User user = this.userService.getUserById(id);
         model.addAttribute("id", id);
         model.addAttribute("user", user);
 
-        return "/admin/user/detail";
+        return "admin/user/detail";
     }
 
     // truy cập trang cập nhật thông tin người dùng
-    @RequestMapping("/admin/user/update/{id}")
+    @GetMapping("/admin/user/update/{id}")
     public String getUpdateUserPage(Model model, @PathVariable long id) {
         User currenUser = this.userService.getUserById(id);
         model.addAttribute("newUser", currenUser);
 
-        return "/admin/user/update";
+        return "admin/user/update";
     }
 
     // cập nhật thông tin người dùng
@@ -116,7 +122,7 @@ public class UserController {
         User user = new User();
         user.setId(id);
         model.addAttribute("newUser", user);
-        return "/admin/user/delete";
+        return "admin/user/delete";
     }
 
     // xoa
