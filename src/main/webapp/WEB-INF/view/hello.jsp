@@ -14,11 +14,7 @@
         </head>
 
         <body>
-            <h1>${test}</h1>
-            <h2>${test2}</h2>
-            <form action="/admin/create" method="get">
-                <input class="btn btn-primary" type="submit" value="Thêm user">
-            </form>
+            <h1 class="text-center">Home page</h1>
         </body>
 
         </html>

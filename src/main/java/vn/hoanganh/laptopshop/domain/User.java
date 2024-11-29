@@ -9,7 +9,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
@@ -17,13 +21,24 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotNull
+    @Email(message = "Email không hợp lệ", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
+    @NotNull
+    @Size(min = 5, message = "Password phải từ 5 ký tự trở lên")
     private String password;
+    @NotNull
+    @Size(min = 3, message = "Tên phải từ 3 ký tự")
     private String fullName;
+    // private String address;
     private String address;
+
     private String phone;
+
     private String avatar;
-    // Nhiều user thì thuộc 1 Role
+
+    // roleId
+    // User many -> to one -> role
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
@@ -31,15 +46,13 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
 
-    public User() {
-    }
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
 
-    public User(String email, String password, String fullName, String address, String phone) {
-        this.email = email;
-        this.password = password;
-        this.fullName = fullName;
-        this.address = address;
-        this.phone = phone;
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
+                + ", address=" + address + ", phone=" + phone + ", avatar=" + avatar + "]";
     }
 
     public long getId() {
@@ -98,19 +111,28 @@ public class User {
         this.avatar = avatar;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("User{");
-        sb.append("id=").append(id);
-        sb.append(", email=").append(email);
-        sb.append(", password=").append(password);
-        sb.append(", fullName=").append(fullName);
-        sb.append(", address=").append(address);
-        sb.append(", phone=").append(phone);
-        sb.append(", avatar=").append(avatar);
-        sb.append('}');
-        return sb.toString();
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
 }
